@@ -1,6 +1,7 @@
 package com.qr.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
@@ -24,8 +25,7 @@ public class QrCodeGenerationRequestDto {
 	private String eventId;
 
 	@Schema(description = "Message you want to decode", required = true, example = "27")
-	@NotBlank(message = "message must not be empty")
-	@Size(max = 5000, message = "message should be numeric")
+	@NotNull(message = "message must not be empty")
 	private Integer tableNo;
 
 	@Schema(description = "Name of person generating the QR code ", required = true, example = "Narendra Kumar")

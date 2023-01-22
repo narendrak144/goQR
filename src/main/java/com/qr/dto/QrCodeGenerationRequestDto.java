@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QrCodeGenerationRequestDto {
 
-	@Schema(description = "Title of your message", required = true, example = "Important message")
+	@Schema(description = "unique eventId", required = true, example = "event id")
 	@NotBlank(message = "title must not be empty")
-	@Size(max = 50, message = "Title should not exceed more than 50 characters")
-	private String title;
+	@Size(max = 50, message = "event Id should not exceed more than 50 characters")
+	private String eventId;
 
-	@Schema(description = "Message you want to decode", required = true, example = "Drink water")
+	@Schema(description = "Message you want to decode", required = true, example = "27")
 	@NotBlank(message = "message must not be empty")
-	@Size(max = 5000, message = "message should not exceed more than 5000 characters")
-	private String message;
+	@Size(max = 5000, message = "message should be numeric")
+	private Integer tableNo;
 
 	@Schema(description = "Name of person generating the QR code ", required = true, example = "Narendra Kumar")
 	@NotBlank(message = "generated-by-name must not be empty")
@@ -35,5 +35,9 @@ public class QrCodeGenerationRequestDto {
 	@Schema(description = "Name of person(s) for which code is being generated", required = true, example = "For Whole World")
 	@NotBlank(message = "generated-for-name must not be empty")
 	private String generatedForName;
+	
+	@Schema(description = "url for which code redirect the user for selection", required = true, example = "http://google.com")
+	@NotBlank(message = "targetPage must not be empty")
+	private String targetPage;
 
 }

@@ -41,7 +41,7 @@ public class QrCodeService {
 	public void generate(final QrCodeGenerationRequestDto qrCodeGenerationRequestDto,
 			final HttpServletResponse httpServletResponse) throws IOException, WriterException {
 		httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment;filename=" + qrCodeGenerationRequestDto.getTitle().trim().replace(" ", "_") + ".png");
+				"attachment;filename=" + qrCodeGenerationRequestDto.getEventId() + ".png");
 
 		final BufferedOutputStream outputStream = new BufferedOutputStream(httpServletResponse.getOutputStream());
 		QRCodeWriter writer = new QRCodeWriter();

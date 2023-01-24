@@ -1,36 +1,75 @@
-
-
---ALTER TABLE post_message ADD COLUMN user_id bigint DEFAULT 0;
-
-CREATE TABLE event_order.event (
-	event_id serial PRIMARY KEY,
-	event_name VARCHAR ( 100 ) NOT NULL,
-	status VARCHAR ( 10 ) NOT NULL,
-	description VARCHAR ( 500 ) default NULL,
-	start_time TIMESTAMP NOT NULL,
-	end_time TIMESTAMP NOT NULL
+CREATE TABLE "event" (
+  "id" int PRIMARY KEY,
+  "name" varchar,
+  "status" varchar,
+  "description" varchar,
+  "start_time" timestamp,
+  "end_time" timestamp,
+  "created_by" varchar,
+  "created_for" varchar
 );
 
-CREATE TABLE event_order.category (
-	id serial PRIMARY KEY,
-	name VARCHAR ( 100 ) NOT NULL,
-	description VARCHAR ( 500 ) default NULL,
-	created_on TIMESTAMP NOT NULL,
-	event_id bigint default null
+CREATE TABLE "event_order" (
+  "id" int PRIMARY KEY,
+  "status" varchar,
+  "description" varchar,
+  "table_no" int,
+  "created_time" timestamp,
+  "event_id" int
 );
 
-CREATE TABLE event_order.sub_category (
-	id serial PRIMARY KEY,
-	name VARCHAR ( 100 ) NOT NULL,
-	description VARCHAR ( 500 ) default NULL,
-	created_on TIMESTAMP NOT NULL,
-	category_id bigint default null
+CREATE TABLE "order_table" (
+  "id" int PRIMARY KEY,
+  "description" varchar,
+  "table_no" int,
+  "created_time" timestamp,
+  "event_order_id" int
 );
 
-CREATE TABLE event_order.menu (
-	id serial PRIMARY KEY,
-	name VARCHAR ( 100 ) NOT NULL,
-	description VARCHAR ( 500 ) default NULL,
-	created_on TIMESTAMP NOT NULL,
-	sub_category_id bigint default null
+CREATE TABLE "table_items" (
+  "id" int PRIMARY KEY,
+  "description" varchar,
+  "table_no" int,
+  "created_time" timestamp,
+  "order_table" int,
+  "Items" int
 );
+
+CREATE TABLE "category" (
+  "id" int PRIMARY KEY,
+  "name" varchar,
+  "description" varchar,
+  "created_on" timestamp,
+  "updated_on" timestamp
+);
+
+CREATE TABLE "sub_category" (
+  "id" int PRIMARY KEY,
+  "name" varchar,
+  "description" varchar,
+  "created_on" timestamp,
+  "updated_on" timestamp,
+  "category_id" int
+);
+
+CREATE TABLE "Items" (
+  "id" int PRIMARY KEY,
+  "name" varchar,
+  "description" varchar,
+  "price" double,
+  "created_on" timestamp,
+  "updated_on" timestamp,
+  "sub_category_id" int
+);
+
+ALTER TABLE "event_order" ADD FOREIGN KEY ("event_id") REFERENCES "event" ("id");
+
+ALTER TABLE "order_table" ADD FOREIGN KEY ("event_order_id") REFERENCES "event_order" ("id");
+
+ALTER TABLE "table_items" ADD FOREIGN KEY ("order_table") REFERENCES "order_table" ("id");
+
+ALTER TABLE "table_items" ADD FOREIGN KEY ("Items") REFERENCES "Items" ("id");
+
+ALTER TABLE "sub_category" ADD FOREIGN KEY ("category_id") REFERENCES "category" ("id");
+
+ALTER TABLE "Items" ADD FOREIGN KEY ("sub_category_id") REFERENCES "sub_category" ("id");
